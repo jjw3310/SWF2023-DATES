@@ -12,10 +12,12 @@ contract Dynamicsbt is ERC721URIStorage, Ownable {
     Counters.Counter private _tokenIdCounter;
  
     error ERC721OutOfBoundsIndex(address owner, uint256 index);
-    
+
     mapping(address => bytes32[]) souls;
 
     mapping(address => uint[]) ownedtokens;
+
+    mapping(string => address) private addressMapping;
 
     constructor() ERC721("SoulBound", "SBT") {}
 
@@ -66,4 +68,19 @@ contract Dynamicsbt is ERC721URIStorage, Ownable {
         return super.tokenURI(tokenId);
     }
 
+    function isAddressMapped(string memory _ci) public view returns(bool) {
+        if (addressMapping[_ci] != address(0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function setAddressMapping(string memory _ci, address _addr) public {
+        addressMapping[_ci] = _addr;
+    }
+
+    function mintDataSBT(string memory _ci, string memory _info) public {
+        safeMint(addressMapping[_ci], bytes32(abi.encodePacked(_info)));
+    }
 }
