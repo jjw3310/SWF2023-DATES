@@ -1,66 +1,60 @@
-import { useState, useEffect } from "react";
-import Intro from "../components/Intro";
-
 import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../web3.config";
-import Nfts from "../components/Nfts";
-const web3 = new Web3(window.ethereum);
-const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+import { Button, useToast } from "@chakra-ui/react";
+import { ethers } from "ethers";
+import crypto from "crypto-browserify";
 
-console.log(contract);
 const Main = ({ account }) => {
-  const [totalNft, setTotalNft] = useState(0);
-  const [mintedNft, setMintedNft] = useState(0);
-  const [myNft, setMyNft] = useState(0);
-  const [page, setPage] = useState(1);
-  const getTotalNft = async () => {
-    try {
-      if (!contract) return;
+  const toast = useToast();
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
-      const response = await contract.methods.totalNft().call();
-
-      setTotalNft(response);
-    } catch (error) {
-      console.error(error);
+  async function verifyOnClick(result) {
+    if (result) {
+      let address = generateAddress();
+      toast({
+        title: "본인인증에 성공했습니다.",
+        description: address,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "본인인증에 실패했습니다.",
+        description: "We've failed.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-  };
-  const getMintedNft = async () => {
-    try {
-      if (!contract) return;
+  }
 
-      const response = await contract.methods.totalSupply().call();
+  function generateAddress() {
+    var id = crypto.randomBytes(32).toString("hex");
+    var privateKey = "0x" + id;
+    var wallet = new ethers.Wallet(privateKey);
+    return wallet.address;
+  }
 
-      setMintedNft(response);
-      //   console.log(response);
-      //   setPage(parseInt((parseInt(response) - 1) / 10) + 1);
-      setPage(Math.floor(parseInt(response - 1) / 3) + 1);
-      //   console.log(page);
-      // 10 - 1 = 9 / 10 = 0 + 1= 1page
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const getMyNft = async () => {
-    try {
-      if (!contract || !account) return;
-      const response = await contract.methods.balanceOf(account).call();
-      console.log("내꺼 : " + response);
-      setMyNft(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    getTotalNft();
-    getMintedNft();
-  }, []);
-  useEffect(() => {
-    getMyNft();
-  }, [account]);
+  function getDataRequest() {
+    const k = "key";
+    const rk = k.padEnd(32, " ");
+    const b = JSON.stringify({ name: "이정윤", age: 34, wage: 60000000 });
+    return encodeByAES56(rk, b);
+  }
+
   return (
     <>
-      <Intro totalNft={totalNft} mintedNft={mintedNft} myNft={myNft} />
-      <Nfts page={page} mintedNft={mintedNft} />
+      <Button
+        bgColor={"blue.300"}
+        onClick={() => {
+          verifyOnClick(true);
+          verifyOnClick(false);
+        }}
+      >
+        본인 인증
+      </Button>
     </>
   );
 };
