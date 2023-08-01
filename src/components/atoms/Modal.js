@@ -16,11 +16,6 @@ const {
 export function verifyModal({ isOpen, onOpen, onClose, initialRef, finalRef }) {
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Button ml={4} ref={finalRef}>
-        I'll receive focus on close
-      </Button>
-
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -29,7 +24,7 @@ export function verifyModal({ isOpen, onOpen, onClose, initialRef, finalRef }) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>본인인증</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
