@@ -133,3 +133,101 @@
 .kakaocolor {
   color: rgba(236, 201, 75, 1);
 }
+
+.seoulmyfont {
+  /* Seoul My Soul */
+
+  margin-top: 20px;
+  margin-left: 20px;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  color: #2a4365;
+}
+
+.myseoulheader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.alarmicon {
+  padding-right: 15px;
+}
+
+.searchMyCard {
+  /* Card */
+
+  width: 378px;
+  height: 185px;
+  margin: 3vw 0 0 2.5vw !important;
+  background: #2a4365;
+  border-radius: 10px;
+}
+
+.searchInfoBox {
+  margin: 1vw 0 0 1vw;
+}
+
+.searchInfoName {
+  width: 90px;
+  height: 24px;
+  margin-top: 10px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  /* identical to box height, or 133% */
+
+  color: #fff5f7;
+}
+
+.searchMyInfo {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+
+  color: #fff5f7;
+}
+
+.searchBoxIcons {
+  gap: 3vw;
+  justify-content: center;
+}
+.commonSearchBoxIcon {
+  text-align: -webkit-center;
+}
+
+.searchIconTitle {
+  /* 신원 정보 */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+
+  color: #fff5f7;
+}
+
+.searchbar {
+  /* Card */
+
+  width: 100%;
+  height: 48px;
+  left: 0px;
+  top: 264px;
+
+  background: #ffffff;
+}
