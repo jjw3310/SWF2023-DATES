@@ -4,9 +4,10 @@ import profileicon from "../icon/profileicon.svg";
 import checkbox from "../icon/searchboxccheck.svg";
 import searchBoxLicense from "../icon/searchBoxLicense.svg";
 import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
+import searchIcon from "../icon/searchIcon.svg";
 export default function search() {
   return (
-    <div className="h-screen myseoulheader space-x-2 bg-[#e2e8f0]">
+    <div className=" myseoulheader   bg-[#e2e8f0]">
       <div className=" seoulmyfont hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         안심복지
       </div>
@@ -40,7 +41,21 @@ export default function search() {
           </div>
         </div>
       </div>
-      <div className="searchbar">ss</div>
+      <div className="searchbar flex gap-3 items-center text-center pl-5">
+        <div>
+          <img src={searchIcon} alt="searchbar" />
+        </div>
+        <div className="categoryOver">
+          <div className="category">ss</div>
+          <div className="category">hh</div>
+          <div className="category">hh</div>
+          <div className="category">hh</div>
+        </div>
+      </div>
+      <div className="policyScroll">
+        <div className="policyBox"></div>
+        <div className="policyBox"></div>
+      </div>
     </div>
   );
 }
