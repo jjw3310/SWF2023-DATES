@@ -6,6 +6,7 @@ import crypto from "crypto-browserify";
 import { useCrypto } from "@hooks/useCrypto";
 import { useRequestData } from "@hooks/useRequestData";
 import { useEffect, useState } from "react";
+import { useWallet } from "@hooks/useWallet";
 
 const Main = ({ account }) => {
   const toast = useToast();
@@ -14,9 +15,26 @@ const Main = ({ account }) => {
   const [ci, setCi] = useState();
   const [address, setAddress] = useState();
   const [data, setData] = useState();
+  const { paidContract, getOwnerPayContract } = useWallet();
 
-  const web3 = new Web3(window.ethereum);
+  // const provider = new ethers.getDefaultProvider(
+  //   "https://evm-dev-t3.cronos.org",
+  //   []
+  // );
+  const provider = new ethers.JsonRpcProvider(
+    "https://goerli.infura.io/v3/43ef50b40f3742aebfbe76b03c09bb68",
+    "goerli"
+  );
+
+  console.log("provider", provider);
+  useEffect(() => {
+    getOwnerPayContract();
+    console.log("paidContract : ", paidContract);
+  }, []);
+
+  const web3 = new Web3("https://evm-dev-t3.cronos.org");
   const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+  // console.log("contract : ", contract);
 
   async function verifyOnClick(_name, _birth, _phonenumber) {
     const result = await verifyByPhone(_name, _birth, _phonenumber);
@@ -47,7 +65,6 @@ const Main = ({ account }) => {
       setData(jsonResult);
       if (jsonResult) {
         generateAddress();
-        console.log("address : ", address);
       }
     }
   }
@@ -56,18 +73,13 @@ const Main = ({ account }) => {
     var id = crypto.randomBytes(32).toString("hex");
     var privateKey = "0x" + id;
     var wallet = new ethers.Wallet(privateKey);
+    console.log("wallet.address : ", wallet.address);
     setAddress(wallet.address);
   }
 
   function getDataAndEncrypt() {
     if (ci && address && data) {
       const key = generateKey(ci, address);
-      // console.log("KEY : ", key);
-      // console.log("DATA : ", JSON.stringify(data));
-      // const k = "key";
-      // const rk = k.padEnd(32, " "); // AES256은 key 길이가 32자여야 함
-      // const b = "암호화는 보안을 위해 매우 중요합니다.";
-      // encodeByAES256(rk, b);
       return encodeByAES256(key, JSON.stringify(data));
     } else {
       console.error("ERROR : getDataAndCrypto()");
@@ -77,11 +89,31 @@ const Main = ({ account }) => {
   useEffect(() => {
     if (ci && address && data) {
       const cryptedData = getDataAndEncrypt();
-      console.log("ENCRYPTED DATA :", cryptedData);
-      console.log(
-        "DECRYPTED DATA :",
-        decodeByAES256(generateKey(ci, address), cryptedData)
-      );
+      const isAddressMapped = async () => {
+        const result = await contract.methods.isAddressMapped(ci).call();
+        if (result) {
+          console.log("true");
+          const res = await contract.methods
+            .mintDataSBT(ci, cryptedData)
+            .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
+          console.log(res);
+        } else {
+          console.log("false");
+          const res = await contract.methods
+            .setAddressMapping(ci, address)
+            .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
+          console.log(res);
+        }
+        return result;
+      };
+
+      let chk = isAddressMapped(ci);
+      // console.log(chk);
+      // console.log("ENCRYPTED DATA :", cryptedData);
+      // console.log(
+      //   "DECRYPTED DATA :",
+      //   decodeByAES256(generateKey(ci, address), cryptedData)
+      // );
     }
   }, [data]);
 

@@ -1,31 +1,25 @@
-// export const CONTRACT_ADDRESS = "0xc3f21b70a6bc436505b55F613B0934b15f48BEb2";
-export const CONTRACT_ADDRESS = "0x49512635338a78217bE757aD6b415438D41A26c5";
+export const CONTRACT_ADDRESS = "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77";
 export const CONTRACT_ABI = [
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_symbol",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_metadataUri",
-        type: "string",
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
       {
         internalType: "uint256",
-        name: "_totalNft",
+        name: "index",
         type: "uint256",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    name: "ERC721OutOfBoundsIndex",
+    type: "error",
   },
   {
     anonymous: false,
@@ -96,34 +90,95 @@ export const CONTRACT_ABI = [
     type: "function",
   },
   {
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         internalType: "uint256",
-        name: "_amount",
+        name: "_fromTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_toTokenId",
         type: "uint256",
       },
     ],
-    name: "batchMint",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    name: "BatchMetadataUpdate",
+    type: "event",
   },
   {
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         internalType: "uint256",
         name: "_tokenId",
         type: "uint256",
       },
     ],
-    name: "burnNFT",
+    name: "MetadataUpdate",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_ci",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_info",
+        type: "string",
+      },
+    ],
+    name: "mintDataSBT",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
     inputs: [],
-    name: "mintNft",
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "info",
+        type: "string",
+      },
+    ],
+    name: "safeMint",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -175,6 +230,24 @@ export const CONTRACT_ABI = [
       },
     ],
     name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_ci",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "_addr",
+        type: "address",
+      },
+    ],
+    name: "setAddressMapping",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -249,6 +322,38 @@ export const CONTRACT_ABI = [
     inputs: [
       {
         internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "_tokenOfOwnerArray",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "owner",
         type: "address",
       },
@@ -284,6 +389,51 @@ export const CONTRACT_ABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getSoul",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getSouls",
+    outputs: [
+      {
+        internalType: "string[]",
+        name: "",
+        type: "string[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_ci",
+        type: "string",
+      },
+    ],
+    name: "isAddressMapped",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -309,38 +459,25 @@ export const CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: "metadataUri",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "mintedNft",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "name",
     outputs: [
       {
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -401,50 +538,7 @@ export const CONTRACT_ABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "tokenByIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "tokenOfOwnerByIndex",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_tokenId",
+        name: "tokenId",
         type: "uint256",
       },
     ],
@@ -454,32 +548,6 @@ export const CONTRACT_ABI = [
         internalType: "string",
         name: "",
         type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalNft",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
       },
     ],
     stateMutability: "view",

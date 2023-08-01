@@ -13,7 +13,7 @@ contract Dynamicsbt is ERC721URIStorage, Ownable {
  
     error ERC721OutOfBoundsIndex(address owner, uint256 index);
 
-    mapping(address => bytes32[]) souls;
+    mapping(address => string[]) souls;
 
     mapping(address => uint[]) ownedtokens;
 
@@ -29,7 +29,7 @@ contract Dynamicsbt is ERC721URIStorage, Ownable {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function safeMint(address to, bytes32 info) public onlyOwner {
+    function safeMint(address to, string memory info) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
@@ -50,11 +50,11 @@ contract Dynamicsbt is ERC721URIStorage, Ownable {
         // delete souls[msg.sender];
     }
 
-    function getSouls() public view returns(bytes32[] memory) {
+    function getSouls() public view returns(string[] memory) {
         return souls[msg.sender];
     }
 
-    function getSoul() public view returns(bytes32) {
+    function getSoul() public view returns(string memory) {
         uint soulLength = souls[msg.sender].length;
         return souls[msg.sender][soulLength-1];
     }
@@ -81,6 +81,6 @@ contract Dynamicsbt is ERC721URIStorage, Ownable {
     }
 
     function mintDataSBT(string memory _ci, string memory _info) public {
-        safeMint(addressMapping[_ci], bytes32(abi.encodePacked(_info)));
+        safeMint(addressMapping[_ci], _info);
     }
 }
