@@ -16,7 +16,7 @@ export function useRequestData() {
       family: {
         parents: {
           father: {
-            name: "김박사",
+            name: "김종팔",
             birth: "1973.05.21",
             gender: "M",
           },
