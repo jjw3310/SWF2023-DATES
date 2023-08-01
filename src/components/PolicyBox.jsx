@@ -1,10 +1,12 @@
 import React from "react";
 
 import revenue from "../icon/revenue.svg";
+
 export default function PolicyBox({
   cashTitle,
   subsidyTitle,
   agency,
+  logo,
   text,
   expectedReceipt,
   amount,
@@ -18,7 +20,7 @@ export default function PolicyBox({
           <div></div>
           <div className="ml-12 justify-end agency">{agency}</div>
           <div>
-            <img src={revenue} alt="revenue" />
+            <img src={logo} alt="logo" />
           </div>
         </div>
         <hr className="hrcss" />

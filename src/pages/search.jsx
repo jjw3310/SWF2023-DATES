@@ -11,10 +11,13 @@ import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
 import { ethers } from "ethers";
 import { useRequestData } from "@hooks/useRequestData";
+import { usePolicyData } from "@hooks/usePolicyData";
 import crypto from "crypto-browserify";
 import Footer from "../components/Footer.jsx";
 import PolicyBox from "../components/PolicyBox.jsx";
 import { Button, Spinner } from "@chakra-ui/react";
+import agencyLogo from "../icon/agency.svg";
+import revenue from "../icon/revenue.svg";
 
 export default function Search() {
   const [ci, setCi] = useState();
@@ -27,11 +30,23 @@ export default function Search() {
 
   const { generateKey, encodeByAES256, decodeByAES256 } = useCrypto();
   const { requestData } = useRequestData();
+  const { requestPolicyData } = usePolicyData();
   const [address, setAddress] = useState();
   const [data, setData] = useState();
   const [decrypted, setDecrypted] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [cashTitle, setCashTitle] = useState("");
+  const [subsidyTitle, setSubsidyTitle] = useState("");
+  const [agency, setAgency] = useState("");
+  const [logo, setLogo] = useState("");
+  const [text, setText] = useState("");
+  const [expectedReceipt, setExpectedReceipt] = useState("");
+  const [amount, setAmount] = useState("");
+  const [check, setCheck] = useState(false);
+  const [check2, setCheck2] = useState(false);
+  const [check3, setCheck3] = useState(false);
+  const [check4, setCheck4] = useState(false);
+  const [check5, setCheck5] = useState(false);
   const web3 = new Web3("https://evm-dev-t3.cronos.org");
   const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
   // console.log("contract : ", contract);
@@ -114,6 +129,41 @@ export default function Search() {
     return age;
   }
 
+  const getPolicyData = async () => {
+    try {
+      const response = await requestPolicyData();
+      console.log(response);
+
+      setCashTitle(response.cashTitle);
+
+      setSubsidyTitle(response.subsidyTitle);
+      setAgency(response.agency);
+      setLogo(response.logo);
+      setText(response.text);
+      setExpectedReceipt(response.expectedReceipt);
+      setAmount(response.amount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getPolicyData();
+  }, []);
+
+  const handleCheckButtonClick = () => {
+    setCheck(!check);
+  };
+  const handleCheckButtonClick2 = () => {
+    setCheck2(!check2);
+  };
+  const handleCheckButtonClick3 = () => {
+    setCheck3(!check3);
+  };
+  const handleCheckButtonClick4 = () => {
+    setCheck4(!check4);
+  };
+
   return (
     <div className=" myseoulheader bg-[#e2e8f0]">
       <div className=" seoulmyfont hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
@@ -150,7 +200,7 @@ export default function Search() {
             </div>
             <button
               onClick={() => {
-                setIsLoading(false);
+                setIsLoading(!isLoading);
               }}
             >
               <div className="commonSearchBoxIcon">
@@ -166,11 +216,21 @@ export default function Search() {
           <img src={searchIcon} alt="searchbar" />
         </div>
         <div className="categoryOver">
-          <div className="category_selected">추천</div>
-          <div className="category">현금</div>
-          <div className="category">주택</div>
-          <div className="category">사업자</div>
-          <div className="category">자녀</div>
+          <button className="category_selected">추천</button>
+          <button className="category">현금</button>
+          <button
+            onClick={handleCheckButtonClick}
+            className={check ? "category_selected" : "category"}
+          >
+            주택
+          </button>
+          <button
+            onClick={handleCheckButtonClick2}
+            className={check2 ? "category_selected" : "category"}
+          >
+            사업자
+          </button>
+          <button className="category">자녀</button>
         </div>
       </div>
       {isLoading ? (
@@ -188,7 +248,27 @@ export default function Search() {
         />
       )}
 
-      <PolicyBox />
+      {check2 ? (
+        <PolicyBox
+          cashTitle={cashTitle}
+          subsidyTitle={subsidyTitle}
+          agency={agency}
+          logo={revenue}
+          text={text}
+          expectedReceipt={expectedReceipt}
+          amount={amount}
+        />
+      ) : (
+        <PolicyBox
+          cashTitle={cashTitle}
+          subsidyTitle={subsidyTitle}
+          agency={agency}
+          logo={revenue}
+          text={text}
+          expectedReceipt={expectedReceipt}
+          amount={amount}
+        />
+      )}
       <Footer />
     </div>
   );
