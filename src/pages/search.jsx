@@ -5,7 +5,6 @@ import checkbox from "../icon/searchboxccheck.svg";
 import searchBoxLicense from "../icon/searchBoxLicense.svg";
 import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
 import searchIcon from "../icon/searchIcon.svg";
-import revenue from "../icon/revenue.svg";
 import { useLocation } from "react-router-dom";
 import { useCrypto } from "@hooks/useCrypto";
 import Web3 from "web3";
@@ -13,7 +12,8 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
 import { ethers } from "ethers";
 import { useRequestData } from "@hooks/useRequestData";
 import crypto from "crypto-browserify";
-
+import Footer from "../components/Footer.jsx";
+import PolicyBox from "../components/PolicyBox.jsx";
 export default function Search() {
   const [ci, setCi] = useState();
   const location = useLocation();
@@ -112,7 +112,7 @@ export default function Search() {
   }
 
   return (
-    <div className=" myseoulheader   bg-[#e2e8f0]">
+    <div className=" myseoulheader bg-[#e2e8f0]">
       <div className=" seoulmyfont hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         안심복지
       </div>
@@ -157,36 +157,15 @@ export default function Search() {
           <img src={searchIcon} alt="searchbar" />
         </div>
         <div className="categoryOver">
-          <div className="category">ss</div>
-          <div className="category">hh</div>
-          <div className="category">hh</div>
-          <div className="category">hh</div>
+          <div className="category_selected">추천</div>
+          <div className="category">현금</div>
+          <div className="category">주택</div>
+          <div className="category">사업자</div>
+          <div className="category">자녀</div>
         </div>
       </div>
-      <div className="policyScroll">
-        <div className="policyBox">
-          <div className="cashTitle mt-3 ml-3 titleFont">현금</div>
-          <div className="flex justify-between justify-around mt-3">
-            <div className="subsidyTitle">근로 장려금</div>
-            <div></div>
-            <div className="ml-12 justify-end agency">국세청</div>
-            <div>
-              <img src={revenue} alt="revenue" />
-            </div>
-          </div>
-          <hr className="hrcss" />
-          <div className="textfield">
-            전년도 연간 부부합산 총 급여액 등에 따른 근로장려금 <br />ㆍ
-            단독가구 최대 165만 원 <br />ㆍ 홑벌이 가구 최대 285만 원 <br />ㆍ
-            맞벌이 가구 최대 330만 원 지급
-          </div>
-          <div className="flex content-around receiptArea">
-            <div className="expectedReceipt">예상수령금액</div>
-            <div className="amount">135만원</div>
-          </div>
-        </div>
-        <div className="policyBox">aa</div>
-      </div>
+      <PolicyBox />
+      <Footer />
     </div>
   );
 }
