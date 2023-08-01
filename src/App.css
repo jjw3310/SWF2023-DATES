@@ -58,8 +58,8 @@
   position: absolute;
   width: 200px;
   height: 24px;
-  left: 45%;
-  top: 256px;
+    left: 44vw;
+  top: 20vh;
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
@@ -68,12 +68,12 @@
   color: #2a4365; */
 
   /* Seoul My Soul */
-
+  /* 
   position: absolute;
   width: 200px;
   height: 24px;
-  left: 45%;
-  top: 20%;
+  left: 44vw;
+  top: 20vh;
 
   font-family: "JetBrains Mono";
   font-style: normal;
@@ -82,7 +82,24 @@
   line-height: 50px;
   /* or 50% */
 
-  color: #2a4365;
+  /* color: #2a4365;  */
+
+  /* 안심복지 */
+
+  position: absolute;
+  width: 200px;
+  height: 24px;
+  left: 44vw;
+  top: 20vh;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 55px;
+  /* identical to box height, or 50% */
+
+  color: #fff5f7;
 }
 
 .subtitle {
@@ -91,8 +108,8 @@
   position: absolute;
   width: 203px;
   height: 53px;
-  left: 44%;
-  top: 47%;
+  left: 44vw;
+  top: 47vh;
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
@@ -109,8 +126,8 @@
 
   width: 346px;
   height: 36px;
-  left: 39%;
-  top: 70%;
+  left: 39vw;
+  top: 70vh;
   gap: 35px;
 
   background: #ffffff;

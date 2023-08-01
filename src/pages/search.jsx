@@ -146,7 +146,7 @@ export default function Search() {
             </div>
             <div className="commonSearchBoxIcon">
               <img src={searchBoxGetInfo} alt="checkbox" />
-              <div className="searchIconTitle">신원 정보</div>
+              <div className="searchIconTitle">신원 갱신</div>
             </div>
           </div>
         </div>
