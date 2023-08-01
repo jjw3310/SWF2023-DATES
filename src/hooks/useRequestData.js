@@ -30,18 +30,23 @@ export function useRequestData() {
           sister1: {
             name: "김누나",
             birth: "1997.02.06",
+            gender: "W",
           },
           sister2: {
             name: "김동생",
             birth: "2003.10.16",
+            gender: "W",
           },
         },
       },
-      wage: 60000000,
+      residence: "다세대 주택",
+      wage: 0,
       assets: {
         realEstate: { APT: "SEOUL APT" },
         goods: { car: "HYUNDAI" },
       },
+      company: "",
+      education: "4년제 대학교 재학",
     };
     return result;
   }

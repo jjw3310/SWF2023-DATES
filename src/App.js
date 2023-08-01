@@ -1,11 +1,10 @@
-import { ChakraProvider, Box, Heading, Text, Button } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/main";
 import Search from "./pages/search";
-import Header from "./components/Header";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./App.css";
-import BoxCompo from "@components/BoxCompo";
+
 function App() {
   const [account, setAccount] = useState("");
 

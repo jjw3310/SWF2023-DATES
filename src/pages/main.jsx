@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../web3.config";
-import { Button, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Button, useDisclosure, useToast } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import crypto from "crypto-browserify";
 import { useCrypto } from "@hooks/useCrypto";
@@ -132,75 +132,77 @@ const Main = ({ account }) => {
 
   return (
     <>
-      <div className="h-screen md:max-h-screen">
-        <div className="gradient h-screen">
-          <div className="flex justify-center safefont">Seoul My Soul</div>
-          <div className="flex justify-center subtitle">
-            원클릭으로 신청하는 나의 맞춤 복지
-          </div>
-          <div className="flex flex-col loginbutton-flex thin ">
-            <button
-              onClick={onOpen}
-              className="flex  flex-row justify-center loginbutton absol-none"
-            >
-              휴대폰 본인인증
-            </button>
-
-            <button className="flex flex-row justify-center loginbutton absol-none">
-              <p className="passcolor">PASS</p>&nbsp; 본인인증
-            </button>
-            <button className="flex flex-row justify-center loginbutton absol-none">
-              <p className="kakaocolor">카카오</p>&nbsp; 본인인증
-            </button>
-          </div>
-        </div>
-        {/* <div className="gradient2 h-1/2"></div> */}
-      </div>
-      {/*  */}
-      <>
-        <Modal
-          initialFocusRef={initialRef}
-          finalFocusRef={finalRef}
-          isOpen={isOpen}
-          onClose={onClose}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create your account</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>이름</FormLabel>
-                <Input ref={initialRef} placeholder="이름" />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>전화번호</FormLabel>
-                <Input placeholder="전화번호" />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>인증번호</FormLabel>
-                <Input placeholder="인증번호" />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button
-                onClick={() => {
-                  onClose();
-                  verifyOnClick();
-                }}
-                colorScheme="blue"
-                mr={3}
+      <Box backgroundColor={"blackAlpha.900"}>
+        <div className="h-screen md:max-h-screen">
+          <div className="gradient h-screen">
+            <div className="flex justify-center safefont">Seoul My Soul</div>
+            <div className="flex justify-center subtitle">
+              원클릭으로 신청하는 나의 맞춤 복지
+            </div>
+            <div className="flex flex-col loginbutton-flex thin ">
+              <button
+                onClick={onOpen}
+                className="flex  flex-row justify-center loginbutton absol-none"
               >
-                Save
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
+                휴대폰 본인인증
+              </button>
+
+              <button className="flex flex-row justify-center loginbutton absol-none">
+                <p className="passcolor">PASS</p>&nbsp; 본인인증
+              </button>
+              <button className="flex flex-row justify-center loginbutton absol-none">
+                <p className="kakaocolor">카카오</p>&nbsp; 본인인증
+              </button>
+            </div>
+          </div>
+          {/* <div className="gradient2 h-1/2"></div> */}
+        </div>
+        {/*  */}
+        <>
+          <Modal
+            initialFocusRef={initialRef}
+            finalFocusRef={finalRef}
+            isOpen={isOpen}
+            onClose={onClose}
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Create your account</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <FormControl>
+                  <FormLabel>이름</FormLabel>
+                  <Input ref={initialRef} placeholder="이름" />
+                </FormControl>
+
+                <FormControl mt={4}>
+                  <FormLabel>전화번호</FormLabel>
+                  <Input placeholder="전화번호" />
+                </FormControl>
+
+                <FormControl mt={4}>
+                  <FormLabel>인증번호</FormLabel>
+                  <Input placeholder="인증번호" />
+                </FormControl>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button
+                  onClick={() => {
+                    onClose();
+                    verifyOnClick();
+                  }}
+                  colorScheme="blue"
+                  mr={3}
+                >
+                  Save
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      </Box>
     </>
   );
 };
