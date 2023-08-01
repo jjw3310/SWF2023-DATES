@@ -1,30 +1,81 @@
+import "@nomiclabs/hardhat-waffle";
+import "hardhat-gas-reporter";
+import "@nomiclabs/hardhat-etherscan";
+import {
+  COINMARKETCAP_API,
+  CRONOSCAN_API_KEY,
+  CRONOS_MAINNET_RPC,
+  CRONOS_TESTNET_RPC,
+  PRIVATE_KEY,
+} from "./constants";
+
 const config = {
-  solidity: "version",
   networks: {
-    hardhat: {},
     cronosDevnet: {
-      url: "https://evm-dev-t3.cronos.org/",
+      url: CRONOS_TESTNET_RPC,
       chainId: 338,
-      accounts: [],
-      gasPrice: 5000000000000,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      gasPrice: "auto",
     },
     cronosTestnet: {
-      url: "https://evm-t3.cronos.org/",
+      url: CRONOS_TESTNET_RPC,
       chainId: 338,
-      accounts: ["myPrivateKey"],
-      gasPrice: 5000000000000,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      gasPrice: "auto",
     },
     cronos: {
-      url: "https://evm.cronos.org/",
+      url: CRONOS_MAINNET_RPC,
       chainId: 25,
-      accounts: ["myPrivateKey"],
-      gasPrice: 5000000000000,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      gasPrice: "auto",
     },
   },
   etherscan: {
     apiKey: {
-      cronosTestnet: "{YOUR_CRONOSCAN_TESTNET_API_KEY}",
-      cronos: "{YOUR_CRONOSCAN_API_KEY}",
+      cronosTestnet: CRONOSCAN_API_KEY,
+      cronos: CRONOSCAN_API_KEY,
+    },
+    customChains: [
+      {
+        network: "cronosDevnet",
+        chainId: 338,
+        urls: {
+          apiURL: "https://cronos.org/explorer/testnet3/api",
+          browserURL: "https://cronos.org/explorer/testnet3/",
+        },
+      },
+      {
+        network: "cronosTestnet",
+        chainId: 338,
+        urls: {
+          apiURL: "https://cronos.org/explorer/testnet3/api",
+          browserURL: "https://cronos.org/explorer/testnet3/",
+        },
+      },
+      {
+        network: "cronos",
+        chainId: 25,
+        urls: {
+          apiURL: "https://api.cronoscan.com/api",
+          browserURL: "https://cronoscan.com",
+        },
+      },
+    ],
+  },
+  solidity: {
+    version: "0.8.18",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
     },
   },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 5000, // In GWei
+    coinmarketcap: COINMARKETCAP_API,
+  },
 };
+
+export default config;

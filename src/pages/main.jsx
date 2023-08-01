@@ -1,12 +1,25 @@
 import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../web3.config";
-import { Button, useToast } from "@chakra-ui/react";
+import { Button, useDisclosure, useToast } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import crypto from "crypto-browserify";
 import { useCrypto } from "@hooks/useCrypto";
 import { useRequestData } from "@hooks/useRequestData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWallet } from "@hooks/useWallet";
+
+const {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  Input,
+  ModalFooter,
+} = require("@chakra-ui/react");
 
 const Main = ({ account }) => {
   const toast = useToast();
@@ -15,22 +28,17 @@ const Main = ({ account }) => {
   const [ci, setCi] = useState();
   const [address, setAddress] = useState();
   const [data, setData] = useState();
-  const { paidContract, getOwnerPayContract } = useWallet();
+  // const { paidContract, getOwnerPayContract } = useWallet();
 
   // const provider = new ethers.getDefaultProvider(
-  //   "https://evm-dev-t3.cronos.org",
-  //   []
+  //   "https://evm-dev-t3.cronos.org"
   // );
-  const provider = new ethers.JsonRpcProvider(
-    "https://goerli.infura.io/v3/43ef50b40f3742aebfbe76b03c09bb68",
-    "goerli"
-  );
 
-  console.log("provider", provider);
-  useEffect(() => {
-    getOwnerPayContract();
-    console.log("paidContract : ", paidContract);
-  }, []);
+  // console.log("provider", provider);
+  // useEffect(() => {
+  // getOwnerPayContract();
+  // console.log("paidContract : ", paidContract);
+  // }, []);
 
   const web3 = new Web3("https://evm-dev-t3.cronos.org");
   const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
@@ -108,44 +116,22 @@ const Main = ({ account }) => {
       };
 
       let chk = isAddressMapped(ci);
-      // console.log(chk);
-      // console.log("ENCRYPTED DATA :", cryptedData);
-      // console.log(
-      //   "DECRYPTED DATA :",
-      //   decodeByAES256(generateKey(ci, address), cryptedData)
-      // );
+      console.log(chk);
+      console.log("ENCRYPTED DATA :", cryptedData);
+      console.log(
+        "DECRYPTED DATA :",
+        decodeByAES256(generateKey(ci, address), cryptedData)
+      );
     }
   }, [data]);
+  // { isOpen, onOpen, onClose, initialRef, finalRef }
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
 
   return (
     <>
-      {/* <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-        <div class="md:flex">
-          <div class="md:shrink-0">
-            <img
-              class="h-48 w-full object-cover md:h-full md:w-48"
-              src="/img/building.jpg"
-              alt="Modern building architecture"
-            />
-          </div>
-          <div class="p-8">
-            <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-              Company retreats
-            </div>
-            <a
-              href="#"
-              class="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
-            >
-              Incredible accommodation for your team
-            </a>
-            <p class="mt-2 text-slate-500">
-              Looking to take your team away on a retreat to enjoy awesome food
-              and take in some sunshine? We have a list of places to do just
-              that.
-            </p>
-          </div>
-        </div>
-      </div> */}
       <div className="h-screen md:max-h-screen">
         <div className="gradient h-screen">
           <div className="flex justify-center safefont">Seoul My Soul</div>
@@ -153,7 +139,10 @@ const Main = ({ account }) => {
             원클릭으로 신청하는 나의 맞춤 복지
           </div>
           <div className="flex flex-col loginbutton-flex thin ">
-            <button className="flex  flex-row justify-center loginbutton absol-none">
+            <button
+              onClick={onOpen}
+              className="flex  flex-row justify-center loginbutton absol-none"
+            >
               휴대폰 본인인증
             </button>
 
@@ -166,27 +155,52 @@ const Main = ({ account }) => {
           </div>
         </div>
         {/* <div className="gradient2 h-1/2"></div> */}
-        <div>
-          <Button
-            bgColor={"blue.300"}
-            onClick={() => {
-              verifyOnClick();
-            }}
-          >
-            본인인증
-          </Button>
-          <Button
-            bgColor={"red.600"}
-            onClick={() => {
-              if (ci) fetchOnClick();
-              else
-                console.error("CI값이 없습니다. 본인인증을 먼저 진행해주세요");
-            }}
-          >
-            조회하기
-          </Button>
-        </div>
       </div>
+      {/*  */}
+      <>
+        <Modal
+          initialFocusRef={initialRef}
+          finalFocusRef={finalRef}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create your account</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>이름</FormLabel>
+                <Input ref={initialRef} placeholder="이름" />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>전화번호</FormLabel>
+                <Input placeholder="전화번호" />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>인증번호</FormLabel>
+                <Input placeholder="인증번호" />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                onClick={() => {
+                  onClose();
+                  verifyOnClick();
+                }}
+                colorScheme="blue"
+                mr={3}
+              >
+                Save
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
     </>
   );
 };
