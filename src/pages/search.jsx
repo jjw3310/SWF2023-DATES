@@ -14,6 +14,8 @@ import { useRequestData } from "@hooks/useRequestData";
 import crypto from "crypto-browserify";
 import Footer from "../components/Footer.jsx";
 import PolicyBox from "../components/PolicyBox.jsx";
+import { Button, Spinner } from "@chakra-ui/react";
+
 export default function Search() {
   const [ci, setCi] = useState();
   const location = useLocation();
@@ -28,6 +30,7 @@ export default function Search() {
   const [address, setAddress] = useState();
   const [data, setData] = useState();
   const [decrypted, setDecrypted] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const web3 = new Web3("https://evm-dev-t3.cronos.org");
   const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
@@ -145,10 +148,16 @@ export default function Search() {
               <img src={searchBoxLicense} alt="checkbox" />
               <div className="searchIconTitle">모바일 신분증</div>
             </div>
-            <div className="commonSearchBoxIcon">
-              <img src={searchBoxGetInfo} alt="checkbox" />
-              <div className="searchIconTitle">신원 갱신</div>
-            </div>
+            <button
+              onClick={() => {
+                setIsLoading(false);
+              }}
+            >
+              <div className="commonSearchBoxIcon">
+                <img src={searchBoxGetInfo} alt="checkbox" />
+                <div className="searchIconTitle">신원 갱신</div>
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -164,6 +173,21 @@ export default function Search() {
           <div className="category">자녀</div>
         </div>
       </div>
+      {isLoading ? (
+        ""
+      ) : (
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+          pos={"absolute"}
+          bottom={"30vh"}
+          left={"46vw"}
+        />
+      )}
+
       <PolicyBox />
       <Footer />
     </div>

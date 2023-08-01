@@ -1,3 +1,5 @@
+import { Spinner } from "@chakra-ui/react";
+
 export function useRequestData() {
   // 1. verify
   async function verifyByPhone(_name, _birth, _phonenumber) {
@@ -19,11 +21,13 @@ export function useRequestData() {
             name: "김종팔",
             birth: "1973.05.21",
             gender: "M",
+            exist: true,
           },
           mother: {
             name: "이슬기",
             birth: "1978.08.07",
             gender: "W",
+            exist: false,
           },
         },
         sibling: {
@@ -31,21 +35,25 @@ export function useRequestData() {
             name: "김누나",
             birth: "1997.02.06",
             gender: "W",
+            exist: true,
           },
           sister2: {
             name: "김동생",
             birth: "2003.10.16",
             gender: "W",
+            exist: true,
           },
         },
       },
       residence: "다세대 주택",
       wage: 0,
+      debt: 100_000_000,
       assets: {
         realEstate: { APT: "SEOUL APT" },
         goods: { car: "HYUNDAI" },
       },
       company: "",
+      month: 18,
       education: "4년제 대학교 재학",
     };
     return result;
