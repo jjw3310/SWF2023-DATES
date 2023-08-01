@@ -176,7 +176,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: baseline;
 }
 
@@ -317,12 +317,11 @@
   /* Card */
 
   box-sizing: border-box;
-
   width: 360px;
   /* height: 220px; */
   left: calc(50% - 360px / 2);
   top: 328px;
-  margin: 3vw;
+  margin: 1vw 3vw 0 3vw;
   background: #ffffff;
   border: 1px solid #f0f0f0;
   border-radius: 10px;

@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <ChakraProvider>
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md  md:max-w-2x2">
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md h-screen md:max-w-2x2">
           {/* <Header account={account} setAccount={setAccount} /> */}
 
           <Routes>

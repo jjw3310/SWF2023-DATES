@@ -7,6 +7,7 @@ import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
 import searchIcon from "../icon/searchIcon.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCrypto } from "@hooks/useCrypto";
+import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
 import { ethers } from "ethers";
 import { useRequestData } from "@hooks/useRequestData";
@@ -15,11 +16,12 @@ import crypto from "crypto-browserify";
 import Footer from "../components/Footer.jsx";
 import PolicyBox from "../components/PolicyBox.jsx";
 import { Button, Spinner } from "@chakra-ui/react";
-import agencyLogo from "../icon/agency.svg";
 import { useWallet } from "@hooks/useWallet";
-
+import agencyLogo from "../icon/agency.svg";
+import revenue from "../icon/revenue.svg";
 export default function Search() {
   const [ci, setCi] = useState();
+
   const location = useLocation();
   useEffect(() => {
     setCi(location.state?.data);
@@ -173,8 +175,8 @@ export default function Search() {
   const navigate = useNavigate();
 
   return (
-    <div className=" myseoulheader bg-[#e2e8f0]">
-      <div className=" seoulmyfont hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+    <div className="myseoulheader h-screen bg-[#e2e8f0]">
+      <div className="seoulmyfont h-screen-full hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         안심복지
       </div>
       <div className="alarmicon cursor-pointer">
@@ -279,7 +281,7 @@ export default function Search() {
               cashTitle={result2.cashTitle}
               subsidyTitle={result2.subsidyTitle}
               agency={result2.agency}
-              logo={revenue}
+              logo={agencyLogo}
               text={result2.text}
               expectedReceipt={result2.expectedReceipt}
               amount={result2.amount}
