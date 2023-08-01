@@ -6,14 +6,15 @@ import searchBoxLicense from "../icon/searchBoxLicense.svg";
 import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
 import searchIcon from "../icon/searchIcon.svg";
 import revenue from "../icon/revenue.svg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCrypto } from "@hooks/useCrypto";
 import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
 import { ethers } from "ethers";
 import { useRequestData } from "@hooks/useRequestData";
 import crypto from "crypto-browserify";
-import { Button, Spinner } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
+import { useWallet } from "@hooks/useWallet";
 
 export default function Search() {
   const [ci, setCi] = useState();
@@ -30,10 +31,13 @@ export default function Search() {
   const [data, setData] = useState();
   const [decrypted, setDecrypted] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { payContract } = useWallet();
 
-  const web3 = new Web3("https://evm-dev-t3.cronos.org");
-  const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-  // console.log("contract : ", contract);
+  const test = async () => {
+    const result = await payContract.owner();
+    console.log(result);
+  };
+  test();
 
   async function fetchOnClick() {
     if (ci) {
@@ -64,31 +68,31 @@ export default function Search() {
 
   useEffect(() => {
     if (ci && address && data) {
-      const cryptedData = getDataAndEncrypt();
-      const isAddressMapped = async () => {
-        const result = await contract.methods.isAddressMapped(ci).call();
-        console.log("isAddressMapped : ", result);
-        if (result) {
-          console.log("true");
-          const res = await contract.methods
-            .mintDataSBT(ci, cryptedData)
-            .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
-          console.log(res);
-        } else {
-          console.log("false");
-          const res = await contract.methods
-            .setAddressMapping(ci, address)
-            .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
-          console.log(res);
-        }
-        return result;
-      };
-      let chk = isAddressMapped(ci);
-      console.log(chk);
-      console.log("ENCRYPTED DATA :", cryptedData);
-      const decrypted = decodeByAES256(generateKey(ci, address), cryptedData);
-      setDecrypted(decrypted);
-      console.log("DECRYPTED DATA : ", decrypted);
+      // const cryptedData = getDataAndEncrypt();
+      // const isAddressMapped = async () => {
+      //   const result = await contract.methods.isAddressMapped(ci).call();
+      //   console.log("isAddressMapped : ", result);
+      //   if (result) {
+      //     console.log("true");
+      //     const res = await contract.methods
+      //       .mintDataSBT(ci, cryptedData)
+      //       .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
+      //     console.log(res);
+      //   } else {
+      //     console.log("false");
+      //     const res = await contract.methods
+      //       .setAddressMapping(ci, address)
+      //       .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
+      //     console.log(res);
+      //   }
+      //   return result;
+      // };
+      // let chk = isAddressMapped(ci);
+      // console.log(chk);
+      // console.log("ENCRYPTED DATA :", cryptedData);
+      // const decrypted = decodeByAES256(generateKey(ci, address), cryptedData);
+      // setDecrypted(decrypted);
+      // console.log("DECRYPTED DATA : ", decrypted);
     }
   }, [data]);
 
@@ -99,19 +103,18 @@ export default function Search() {
   function calculateAge(birthdate) {
     const today = new Date();
     const birthDate = new Date(birthdate);
-
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birthDate.getDate())
     ) {
       age -= 1;
     }
-
     return age;
   }
+
+  const navigate = useNavigate();
 
   return (
     <div className=" myseoulheader   bg-[#e2e8f0]">
@@ -139,10 +142,17 @@ export default function Search() {
         </div>
         <div className="h-1/2">
           <div className="flex searchBoxIcons">
-            <div className="commonSearchBoxIcon">
-              <img src={checkbox} alt="checkbox" />
-              <div className="searchIconTitle">신원 정보</div>
-            </div>
+            <button
+              onClick={() => {
+                alert("asd");
+                navigate("/myinfo", { state: { data: decrypted, ci: ci } });
+              }}
+            >
+              <div className="commonSearchBoxIcon">
+                <img src={checkbox} alt="checkbox" />
+                <div className="searchIconTitle">신원 정보</div>
+              </div>
+            </button>
             <div className="commonSearchBoxIcon">
               <img src={searchBoxLicense} alt="checkbox" />
               <div className="searchIconTitle">모바일 신분증</div>
