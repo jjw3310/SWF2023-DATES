@@ -2,6 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/main";
 import Search from "./pages/search";
+import Detail from "./pages/detail";
 import { useState } from "react";
 import "./App.css";
 import Myinfo from "./pages/myinfo";
