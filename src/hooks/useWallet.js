@@ -1,7 +1,6 @@
 import { useState } from "react";
-
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
-// import { ethers } from "hardhat";
+import { ethers } from "ethers";
 // import {
 //   CRONOS_TESTNET_RPC,
 //   DEPLOYED_CONTRACT_ADDRESS,
@@ -9,12 +8,16 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
 // } from "src/constants";
 
 export const useWallet = () => {
-  // const [paidContract, setPayContract] = useState();
-  // const contractAddress = DEPLOYED_CONTRACT_ADDRESS;
-  // const contractABI = CONTRACT_ABI;
-  // const provider = new ethers.p`roviders.JsonRpcProvider(CRONOS_TESTNET_RPC);
-  // const signer = new ethers.Wallet(PRIVATE_KEY, provider);
-  // console.log("signer : ", signer);
-  // function getOwnerPayContract() {}
-  // return { paidContract, getOwnerPayContract };
+  const ethers = require("ethers");
+  const provider = new ethers.AlchemyProvider(
+    "goerli",
+    process.env.REACT_APP_ALCHEMY_KEY
+  );
+  const signer = new ethers.Wallet(process.env.REACT_APP_PVK, provider);
+  const payContract = new ethers.Contract(
+    CONTRACT_ADDRESS,
+    CONTRACT_ABI,
+    signer
+  );
+  return { payContract };
 };

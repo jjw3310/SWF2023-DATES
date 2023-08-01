@@ -184,6 +184,28 @@
   padding-right: 15px;
 }
 
+.myInfoCard {
+  /* Card */
+  width: 413px;
+  height: 97px;
+  margin: 3vw 0 0 2vw !important;
+  background: #2a4365;
+  border-radius: 10px;
+}
+
+.myInfoBox {
+  /* Card */
+  box-sizing: border-box;
+  width: 413px;
+  height: 210px;
+  left: calc(50% - 360px / 2);
+  top: 328px;
+  margin: 2vw;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+}
+
 .searchMyCard {
   /* Card */
 

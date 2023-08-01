@@ -1,5 +1,3 @@
-import { Spinner } from "@chakra-ui/react";
-
 export function useRequestData() {
   // 1. verify
   async function verifyByPhone(_name, _birth, _phonenumber) {

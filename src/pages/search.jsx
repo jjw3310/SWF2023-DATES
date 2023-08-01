@@ -5,7 +5,8 @@ import checkbox from "../icon/searchboxccheck.svg";
 import searchBoxLicense from "../icon/searchBoxLicense.svg";
 import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
 import searchIcon from "../icon/searchIcon.svg";
-import { useLocation } from "react-router-dom";
+import revenue from "../icon/revenue.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCrypto } from "@hooks/useCrypto";
 import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
@@ -17,7 +18,7 @@ import Footer from "../components/Footer.jsx";
 import PolicyBox from "../components/PolicyBox.jsx";
 import { Button, Spinner } from "@chakra-ui/react";
 import agencyLogo from "../icon/agency.svg";
-import revenue from "../icon/revenue.svg";
+import { useWallet } from "@hooks/useWallet";
 
 export default function Search() {
   const [ci, setCi] = useState();
@@ -42,6 +43,9 @@ export default function Search() {
   const [text, setText] = useState("");
   const [expectedReceipt, setExpectedReceipt] = useState("");
   const [amount, setAmount] = useState("");
+  const [result1, setResult1] = useState();
+  const [result2, setResult2] = useState();
+  const [result3, setResult3] = useState();
   const [check, setCheck] = useState(false);
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
@@ -50,6 +54,13 @@ export default function Search() {
   const web3 = new Web3("https://evm-dev-t3.cronos.org");
   const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
   // console.log("contract : ", contract);
+  const { payContract } = useWallet();
+
+  const test = async () => {
+    const result = await payContract.owner();
+    console.log(result);
+  };
+  test();
 
   async function fetchOnClick() {
     if (ci) {
@@ -80,31 +91,31 @@ export default function Search() {
 
   useEffect(() => {
     if (ci && address && data) {
-      const cryptedData = getDataAndEncrypt();
-      const isAddressMapped = async () => {
-        const result = await contract.methods.isAddressMapped(ci).call();
-        console.log("isAddressMapped : ", result);
-        if (result) {
-          console.log("true");
-          const res = await contract.methods
-            .mintDataSBT(ci, cryptedData)
-            .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
-          console.log(res);
-        } else {
-          console.log("false");
-          const res = await contract.methods
-            .setAddressMapping(ci, address)
-            .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
-          console.log(res);
-        }
-        return result;
-      };
-      let chk = isAddressMapped(ci);
-      console.log(chk);
-      console.log("ENCRYPTED DATA :", cryptedData);
-      const decrypted = decodeByAES256(generateKey(ci, address), cryptedData);
-      setDecrypted(decrypted);
-      console.log("DECRYPTED DATA : ", decrypted);
+      // const cryptedData = getDataAndEncrypt();
+      // const isAddressMapped = async () => {
+      //   const result = await contract.methods.isAddressMapped(ci).call();
+      //   console.log("isAddressMapped : ", result);
+      //   if (result) {
+      //     console.log("true");
+      //     const res = await contract.methods
+      //       .mintDataSBT(ci, cryptedData)
+      //       .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
+      //     console.log(res);
+      //   } else {
+      //     console.log("false");
+      //     const res = await contract.methods
+      //       .setAddressMapping(ci, address)
+      //       .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
+      //     console.log(res);
+      //   }
+      //   return result;
+      // };
+      // let chk = isAddressMapped(ci);
+      // console.log(chk);
+      // console.log("ENCRYPTED DATA :", cryptedData);
+      // const decrypted = decodeByAES256(generateKey(ci, address), cryptedData);
+      // setDecrypted(decrypted);
+      // console.log("DECRYPTED DATA : ", decrypted);
     }
   }, [data]);
 
@@ -115,17 +126,14 @@ export default function Search() {
   function calculateAge(birthdate) {
     const today = new Date();
     const birthDate = new Date(birthdate);
-
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birthDate.getDate())
     ) {
       age -= 1;
     }
-
     return age;
   }
 
@@ -134,14 +142,18 @@ export default function Search() {
       const response = await requestPolicyData();
       console.log(response);
 
-      setCashTitle(response.cashTitle);
+      setResult1(response.result);
+      setResult2(response.result2);
+      setResult3(response.result3);
+      setCashTitle(response.result.cashTitle);
 
-      setSubsidyTitle(response.subsidyTitle);
-      setAgency(response.agency);
-      setLogo(response.logo);
-      setText(response.text);
-      setExpectedReceipt(response.expectedReceipt);
-      setAmount(response.amount);
+      setSubsidyTitle(response.result.subsidyTitle);
+      setAgency(response.result.agency);
+      setLogo(response.result.logo);
+      setText(response.result.text);
+      setExpectedReceipt(response.result.expectedReceipt);
+      setAmount(response.result.amount);
+      console.log(result1, result2, result3);
     } catch (error) {
       console.log(error);
     }
@@ -163,6 +175,7 @@ export default function Search() {
   const handleCheckButtonClick4 = () => {
     setCheck4(!check4);
   };
+  const navigate = useNavigate();
 
   return (
     <div className=" myseoulheader bg-[#e2e8f0]">
@@ -190,10 +203,17 @@ export default function Search() {
         </div>
         <div className="h-1/2">
           <div className="flex searchBoxIcons">
-            <div className="commonSearchBoxIcon">
-              <img src={checkbox} alt="checkbox" />
-              <div className="searchIconTitle">신원 정보</div>
-            </div>
+            <button
+              onClick={() => {
+                alert("asd");
+                navigate("/myinfo", { state: { data: decrypted, ci: ci } });
+              }}
+            >
+              <div className="commonSearchBoxIcon">
+                <img src={checkbox} alt="checkbox" />
+                <div className="searchIconTitle">신원 정보</div>
+              </div>
+            </button>
             <div className="commonSearchBoxIcon">
               <img src={searchBoxLicense} alt="checkbox" />
               <div className="searchIconTitle">모바일 신분증</div>
@@ -217,12 +237,12 @@ export default function Search() {
         </div>
         <div className="categoryOver">
           <button className="category_selected">추천</button>
-          <button className="category">현금</button>
+          <button className="category">주택</button>
           <button
             onClick={handleCheckButtonClick}
             className={check ? "category_selected" : "category"}
           >
-            주택
+            현금
           </button>
           <button
             onClick={handleCheckButtonClick2}
@@ -250,24 +270,37 @@ export default function Search() {
 
       {check2 ? (
         <PolicyBox
-          cashTitle={cashTitle}
-          subsidyTitle={subsidyTitle}
-          agency={agency}
+          cashTitle={result1.cashTitle}
+          subsidyTitle={result1.subsidyTitle}
+          agency={result1.agency}
           logo={revenue}
-          text={text}
-          expectedReceipt={expectedReceipt}
-          amount={amount}
+          text={result1.text}
+          expectedReceipt={result1.expectedReceipt}
+          amount={result1.amount}
         />
       ) : (
-        <PolicyBox
-          cashTitle={cashTitle}
-          subsidyTitle={subsidyTitle}
-          agency={agency}
-          logo={revenue}
-          text={text}
-          expectedReceipt={expectedReceipt}
-          amount={amount}
-        />
+        check && (
+          <>
+            <PolicyBox
+              cashTitle={result2.cashTitle}
+              subsidyTitle={result2.subsidyTitle}
+              agency={result2.agency}
+              logo={revenue}
+              text={result2.text}
+              expectedReceipt={result2.expectedReceipt}
+              amount={result2.amount}
+            />
+            <PolicyBox
+              cashTitle={cashTitle}
+              subsidyTitle={subsidyTitle}
+              agency={agency}
+              logo={revenue}
+              text={text}
+              expectedReceipt={expectedReceipt}
+              amount={amount}
+            />
+          </>
+        )
       )}
       <Footer />
     </div>
