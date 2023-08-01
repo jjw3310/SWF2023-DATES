@@ -295,3 +295,106 @@
   overflow-x: hidden; /* Hide horizontal scrollbar */
   overflow-y: scroll;
 }
+
+.cashTitle {
+  /* Rectangle 1 */
+
+  box-sizing: border-box;
+
+  width: 59px;
+  height: 28px;
+  left: 36px;
+  top: 340px;
+
+  background: #ffffff;
+  border: 1px solid rgba(229, 62, 62, 0.85);
+  border-radius: 25px;
+}
+.titleFont {
+  /* 현금 */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  text-align: center;
+  font-size: 13px;
+  line-height: 24px;
+  /* identical to box height, or 185% */
+
+  color: rgba(229, 62, 62, 0.85);
+}
+.subsidyTitle {
+  /* 근로장려금 */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  /* identical to box height, or 100% */
+
+  color: rgba(0, 0, 0, 0.64);
+}
+
+.agency {
+  /* 국세청 */
+
+  font-family: "Inter";
+  font-style: normal;
+  align-self: self-end;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  color: #858585;
+}
+
+.hrcss {
+  width: 90%;
+  margin-left: 5%;
+}
+
+.textfield {
+  /* 전년도 연간 부부합산 총 급여액 등에 따른 근로장려금 ㆍ 단독가구 최대 165만 원 ㆍ 홑벌이 가구 최대 285만 원 ㆍ 맞벌이 가구 최대 330만 원 지급 */
+  margin-left: 1vw;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+  /* or 200% */
+
+  color: rgba(0, 0, 0, 0.64);
+}
+
+.receiptArea {
+  justify-content: end;
+  gap: 5%;
+  margin-right: 5%;
+}
+.expectedReceipt {
+  /* 예상 수령금액 */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 11px;
+  line-height: 24px;
+  /* identical to box height, or 218% */
+
+  color: rgba(229, 62, 62, 0.85);
+}
+
+.amount {
+  /* 135만원 */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height, or 120% */
+
+  color: rgba(229, 62, 62, 0.8);
+}

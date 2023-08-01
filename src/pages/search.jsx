@@ -5,6 +5,7 @@ import checkbox from "../icon/searchboxccheck.svg";
 import searchBoxLicense from "../icon/searchBoxLicense.svg";
 import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
 import searchIcon from "../icon/searchIcon.svg";
+import revenue from "../icon/revenue.svg";
 import { useLocation } from "react-router-dom";
 import { useCrypto } from "@hooks/useCrypto";
 import Web3 from "web3";
@@ -185,8 +186,28 @@ export default function Search() {
         />
       )}
       <div className="policyScroll">
-        <div className="policyBox"></div>
-        <div className="policyBox"></div>
+        <div className="policyBox">
+          <div className="cashTitle mt-3 ml-3 titleFont">현금</div>
+          <div className="flex justify-between justify-around mt-3">
+            <div className="subsidyTitle">근로 장려금</div>
+            <div></div>
+            <div className="ml-12 justify-end agency">국세청</div>
+            <div>
+              <img src={revenue} alt="revenue" />
+            </div>
+          </div>
+          <hr className="hrcss" />
+          <div className="textfield">
+            전년도 연간 부부합산 총 급여액 등에 따른 근로장려금 <br />ㆍ
+            단독가구 최대 165만 원 <br />ㆍ 홑벌이 가구 최대 285만 원 <br />ㆍ
+            맞벌이 가구 최대 330만 원 지급
+          </div>
+          <div className="flex content-around receiptArea">
+            <div className="expectedReceipt">예상수령금액</div>
+            <div className="amount">135만원</div>
+          </div>
+        </div>
+        <div className="policyBox">aa</div>
       </div>
     </div>
   );
