@@ -58,8 +58,8 @@
   position: absolute;
   width: 200px;
   height: 24px;
-  left: 45%;
-  top: 256px;
+    left: 44vw;
+  top: 20vh;
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
@@ -68,7 +68,7 @@
   color: #2a4365; */
 
   /* Seoul My Soul */
-
+  /* 
   position: absolute;
   width: 200px;
   height: 24px;
@@ -82,7 +82,24 @@
   line-height: 50px;
   /* or 50% */
 
-  color: #2a4365;
+  /* color: #2a4365;  */
+
+  /* 안심복지 */
+
+  position: absolute;
+  width: 200px;
+  height: 24px;
+  left: 44vw;
+  top: 20vh;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 55px;
+  /* identical to box height, or 50% */
+
+  color: #fff5f7;
 }
 
 .subtitle {

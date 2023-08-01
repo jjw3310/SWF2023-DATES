@@ -7,7 +7,7 @@ import { useCrypto } from "@hooks/useCrypto";
 import { useRequestData } from "@hooks/useRequestData";
 import { useEffect, useRef, useState } from "react";
 import { useWallet } from "@hooks/useWallet";
-
+import { useNavigate } from "react-router-dom";
 const {
   Modal,
   ModalOverlay,
@@ -28,6 +28,7 @@ const Main = ({ account }) => {
   const [ci, setCi] = useState();
   const [address, setAddress] = useState();
   const [data, setData] = useState();
+  const navigate = useNavigate();
   // const { paidContract, getOwnerPayContract } = useWallet();
 
   // const provider = new ethers.getDefaultProvider(
@@ -191,6 +192,7 @@ const Main = ({ account }) => {
                   onClick={() => {
                     onClose();
                     verifyOnClick();
+                    navigate("/search");
                   }}
                   colorScheme="blue"
                   mr={3}
