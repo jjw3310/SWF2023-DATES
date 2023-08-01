@@ -66,7 +66,7 @@ const Main = () => {
       <Box backgroundColor={"blackAlpha.900"}>
         <div className="h-screen md:max-h-screen">
           <div className="gradient h-screen">
-            <div className="flex justify-center safefont">Seoul My Soul</div>
+            <div className="flex justify-center safefont">안심복지</div>
             <div className="flex justify-center subtitle">
               원클릭으로 신청하는 나의 맞춤 복지
             </div>
@@ -98,7 +98,7 @@ const Main = () => {
           >
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Create your account</ModalHeader>
+              <ModalHeader>본인 인증</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
                 <FormControl>
@@ -127,9 +127,9 @@ const Main = () => {
                   colorScheme="blue"
                   mr={3}
                 >
-                  Save
+                  인증
                 </Button>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose}>취소</Button>
               </ModalFooter>
             </ModalContent>
           </Modal>

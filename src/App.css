@@ -116,7 +116,7 @@
   font-size: 20px;
   line-height: 24px;
   text-align: center;
-  color: #2a4365;
+  color: #e6e9ed;
 }
 
 .loginbutton-flex {
@@ -197,7 +197,7 @@
   /* Card */
   box-sizing: border-box;
   width: 413px;
-  height: 210px;
+  height: 415px;
   left: calc(50% - 360px / 2);
   top: 328px;
   margin: 2vw;

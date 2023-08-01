@@ -14,7 +14,7 @@ export default function Myinfo() {
     setCi(location.state?.ci);
     // console.log(location.state?.ci);
     setDecrypted(location.state?.data);
-    // console.log(location.state?.data);
+    console.log(location.state?.data);
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +39,7 @@ export default function Myinfo() {
       <div className=" myseoulheader bg-[#e2e8f0]">
         <Flex direction="column">
           <Flex direction="row">
-            <Box>
+            <Box pt={"20px"} pl={"25px"}>
               <button
                 onClick={() => {
                   navigate("/");
@@ -48,7 +48,7 @@ export default function Myinfo() {
                 <AiOutlineLeft />
               </button>
             </Box>
-            <Box alignItems={"center"}>
+            <Box ml={"110px"} alignItems={"center"}>
               <div className=" seoulmyfont hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                 신원정보
               </div>
@@ -65,11 +65,11 @@ export default function Myinfo() {
                     {decrypted ? decrypted.name : ""}님
                   </div>
                   <div className="searchMyInfo">
-                    {/* {decrypted
+                    {decrypted
                       ? `${decrypted.birth} / 만 ${calculateAge(
                           decrypted.birth
                         )}세`
-                      : ""} */}
+                      : ""}
                   </div>
                 </div>
               </Flex>
@@ -101,7 +101,7 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
-              mb={"1px"}
+              mb={"5px"}
             >
               주거지
             </Box>
@@ -111,13 +111,13 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
-              mb={"9px"}
+              mb={"15px"}
             >
-              {/* {decrypted
+              {decrypted
                 ? JSON.stringify(decrypted.address).replaceAll('"', "")
-                : ""} */}
+                : ""}
             </Box>
-            <Box
+            {/* <Box
               color={(0, 0, 0, 0.65)}
               fontFamily={"Inter"}
               fontSize=" 18px"
@@ -135,14 +135,10 @@ export default function Myinfo() {
               lineHeight={"24px"}
               mb={"9px"}
             >
-              {/* {decrypted
-                ? JSON.stringify(decrypted.family)
-                    .replaceAll('"', "")
-                    .map((v) => {
-                      <Box>v</Box>;
-                    })
-                : ""} */}
-            </Box>
+              {decrypted
+                ? JSON.stringify(decrypted.family).replaceAll('"', "")
+                : ""}
+            </Box> */}
             <Box
               color={(0, 0, 0, 0.65)}
               fontFamily={"Inter"}
@@ -150,6 +146,7 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
+              mb={"5px"}
             >
               주거형태
               <Box
@@ -158,7 +155,7 @@ export default function Myinfo() {
                 fontStyle={"normal"}
                 fontWeight={"600"}
                 lineHeight={"24px"}
-                mb={"9px"}
+                mb={"15px"}
               >
                 {decrypted
                   ? JSON.stringify(decrypted.residence).replaceAll('"', "")
@@ -166,7 +163,7 @@ export default function Myinfo() {
               </Box>
             </Box>
 
-            <Box
+            {/* <Box
               color={(0, 0, 0, 0.65)}
               fontFamily={"Inter"}
               fontSize=" 18px"
@@ -187,7 +184,7 @@ export default function Myinfo() {
               {decrypted
                 ? JSON.stringify(decrypted.assets).replaceAll('"', "")
                 : ""}
-            </Box>
+            </Box> */}
             <Box
               color={(0, 0, 0, 0.65)}
               fontFamily={"Inter"}
@@ -195,6 +192,7 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
+              mb={"5px"}
             >
               소득
             </Box>
@@ -204,7 +202,7 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
-              mb={"9px"}
+              mb={"15px"}
             >
               {decrypted
                 ? `${JSON.stringify(decrypted.wage).replaceAll('"', "")} 원`
@@ -217,6 +215,7 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
+              mb={"5px"}
             >
               재직유무
             </Box>
@@ -226,11 +225,9 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
-              mb={"9px"}
+              mb={"15px"}
             >
-              {/* {JSON.stringify(decrypted.company).replaceAll('"', "") !== ""
-                ? JSON.stringify(decrypted.company).replaceAll('"', "")
-                : "해당사항 없음"} */}
+              {decrypted ? decrypted.company : ""}
             </Box>
             <Box
               color={(0, 0, 0, 0.65)}
@@ -239,6 +236,7 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
+              mb={"5px"}
             >
               학력
             </Box>
@@ -248,11 +246,9 @@ export default function Myinfo() {
               fontStyle={"normal"}
               fontWeight={"600"}
               lineHeight={"24px"}
-              mb={"9px"}
+              mb={"15px"}
             >
-              {/* {JSON.stringify(decrypted.education).replaceAll('"', "") !== ""
-                ? JSON.stringify(decrypted.education).replaceAll('"', "")
-                : "해당사항 없음"} */}
+              {decrypted ? decrypted.education : ""}
             </Box>
           </Flex>
         </div>

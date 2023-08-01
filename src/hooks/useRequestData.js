@@ -13,6 +13,9 @@ export function useRequestData() {
       birth: "2000.10.16",
       gender: "M",
       address: "서울특별시 강남구 도산대로89길 17 (청담동)",
+      company: "해당사항 없음",
+      month: 18,
+      education: "4년제 대학교 재학",
       family: {
         parents: {
           father: {
@@ -50,9 +53,6 @@ export function useRequestData() {
         realEstate: { APT: "SEOUL APT" },
         goods: { car: "HYUNDAI" },
       },
-      company: "",
-      month: 18,
-      education: "4년제 대학교 재학",
     };
     return result;
   }

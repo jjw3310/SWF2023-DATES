@@ -19,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main account={account} />} />
             <Route path="/search" element={<Search account={account} />} />
-            <Route path="/detail" element={<Main account={account} />} />
+            <Route path="/detail" element={<Detail account={account} />} />
             <Route path="/myinfo" element={<Myinfo />} />
           </Routes>
         </div>

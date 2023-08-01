@@ -5,10 +5,8 @@ import checkbox from "../icon/searchboxccheck.svg";
 import searchBoxLicense from "../icon/searchBoxLicense.svg";
 import searchBoxGetInfo from "../icon/searchBoxGetInfo.svg";
 import searchIcon from "../icon/searchIcon.svg";
-import revenue from "../icon/revenue.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCrypto } from "@hooks/useCrypto";
-import Web3 from "web3";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "src/web3.config";
 import { ethers } from "ethers";
 import { useRequestData } from "@hooks/useRequestData";
@@ -56,12 +54,6 @@ export default function Search() {
   // console.log("contract : ", contract);
   const { payContract } = useWallet();
 
-  const test = async () => {
-    const result = await payContract.owner();
-    console.log(result);
-  };
-  test();
-
   async function fetchOnClick() {
     if (ci) {
       const jsonResult = await requestData(ci);
@@ -91,31 +83,34 @@ export default function Search() {
 
   useEffect(() => {
     if (ci && address && data) {
-      // const cryptedData = getDataAndEncrypt();
-      // const isAddressMapped = async () => {
-      //   const result = await contract.methods.isAddressMapped(ci).call();
-      //   console.log("isAddressMapped : ", result);
-      //   if (result) {
-      //     console.log("true");
-      //     const res = await contract.methods
-      //       .mintDataSBT(ci, cryptedData)
-      //       .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
-      //     console.log(res);
-      //   } else {
-      //     console.log("false");
-      //     const res = await contract.methods
-      //       .setAddressMapping(ci, address)
-      //       .send({ from: "0x3391a020fB02bCcCBfa57114fE1f0bA04972CD77" });
-      //     console.log(res);
-      //   }
-      //   return result;
-      // };
-      // let chk = isAddressMapped(ci);
-      // console.log(chk);
-      // console.log("ENCRYPTED DATA :", cryptedData);
-      // const decrypted = decodeByAES256(generateKey(ci, address), cryptedData);
-      // setDecrypted(decrypted);
-      // console.log("DECRYPTED DATA : ", decrypted);
+      const cryptedData = getDataAndEncrypt();
+      const isAddressMapped = async () => {
+        const result = await payContract.isAddressMapped(ci);
+        console.log("isAddressMapped : ", result);
+        if (result) {
+          console.log("true");
+          const res = await payContract.mintDataSBT(ci, cryptedData);
+          console.log(res);
+        } else {
+          console.log("false");
+          const res = await payContract.setAddressMapping(ci, address);
+          console.log(res);
+        }
+      };
+      let chk = isAddressMapped(ci);
+      console.log(chk);
+      console.log("ENCRYPTED DATA :", cryptedData);
+
+      const dec = async () => {
+        const soul = await payContract.getSoul();
+        console.log("SOUL : ", soul);
+        const decData = decodeByAES256(generateKey(ci, address), soul);
+        console.log("decData : ", decData);
+      };
+      dec();
+      const decrypted = decodeByAES256(generateKey(ci, address), cryptedData);
+      setDecrypted(decrypted);
+      console.log("DECRYPTED DATA : ", decrypted);
     }
   }, [data]);
 
@@ -205,7 +200,6 @@ export default function Search() {
           <div className="flex searchBoxIcons">
             <button
               onClick={() => {
-                alert("asd");
                 navigate("/myinfo", { state: { data: decrypted, ci: ci } });
               }}
             >
